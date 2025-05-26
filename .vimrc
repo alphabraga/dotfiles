@@ -1,4 +1,4 @@
-" Minhas configurações do vim.
+" Minhas configurações do nvim.
 " Algumas considerações: estou evitando plugins
 
 " Configurações básicas
@@ -37,9 +37,47 @@ nnoremap <Space> :
 " Assim para escrever o arquivo basta no modo normal digitar Space+w
 " E assim sucessivamente
 
+" Ainda quero colocar o fzf + bat
+
+call plug#begin('~/.local/share/nvim/plugged')
+
+" Plugins aqui
+
+" fzf + bat
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+
+Plug 'nvim-lua/plenary.nvim' " dependência
+Plug 'lewis6991/gitsigns.nvim'
+
+call plug#end()
+
+" Opcional: define o preview bonito com bat
+let $FZFDEFAULT_OPTS='--preview "bat --style=numbers --color=always --line-range :500 {}"'
+
+" Se Neovim for aberto com um diretório, roda :Files (fzf)
+autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) | execute 'Files' | endif
+
 nnoremap <Leader>w :w<CR>
 nnoremap <Leader>q :q<CR>
 nnoremap <Leader>x :x<CR>
 
+" Atalho para abrir o fzf+bat
+noremap <silent> <Space>f  :Files<CR>
 
-" Ainda quero colocar o fzf + bat
+" alternar entre buffers
+
+nnoremap <Space>b :Buffers<CR>
+
+" buscar com um regex melhorado
+
+nnoremap <Space>g :Rg<CR>
+
+" historico de arquivos e comandos
+
+nnoremap <Space>h :History<CR>
+
+
+" Regua vertical na linha 80
+set colorcolumn=80
+
